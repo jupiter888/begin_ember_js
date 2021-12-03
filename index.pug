@@ -1,0 +1,162 @@
+#not using ember. using pugjs
+html
+    head
+        title= 'JS Materials'
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js')
+        style.
+            *{box-sizing:border-box;}
+            header.header h1{
+                color:darkgreen;
+                text-align: center;
+                font-size:80;
+            }
+            header.header h2{
+                color:grey;
+                text-align:center;
+                font-size:35;
+            }
+            section.side h1{
+                color: cornflowerblue;
+                text-align: center;
+                font-size:28;
+            }
+            section.side h2{
+                            color: cornflowerblue;
+                            text-align: center;
+                            font-family:sans-serif;
+                        }
+            body {
+                background: #afc0ad;
+                margin: 0;
+            }
+            .columns {
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            }
+            aside{
+                flex-wrap:wrap;
+                float:right;
+                color: #ff1493
+            }
+            section.side{
+                -ms-flex: 30%;
+                flex:30%;
+                background: linear-gradient(to bottom, #33FFD1 0%, #33FFD1 0%, #ff0066 100%); )
+                /*background-color: linear-gradient(to top, #33ccff 0%, #ff99cc 100%);*/
+                padding: 30px;
+            }
+            /* right column (Main) */
+            .main {
+                -ms-flex: 70%; /* IE10 */
+                flex: 70%;
+                background-color: black;
+                color: white;
+                padding: 30px;
+            }
+            /* Responsive-if screen <700px wide,  two columns stack on each other, not next to each other */
+            @media screen and (max-width: 700px) { .columns {flex-direction: column;}
+            }
+            /* Responsive- if screen  <700px wide,  two columns stack on each other, not next to each other */
+            @media screen and (max-width: 400px) { .navbar a .home {float: none;width: 100%;}
+            }
+
+
+
+    body
+        header(class="header")
+            h1 Group Project
+            h2 Javascript + Webdesign
+
+            div(class="columns")
+                section(class="side")
+                    h2
+                        u Materials
+                    if student
+                        h1 Student: #{student}
+                        ul(class='')
+                            each m in material
+                                li
+                                    button(onclick='openMaterial(this.id)', id=m.name) #{m.chapter}.#{m.name}
+
+                        each m in material
+                            div(id='modal' + m.name, style='display:none;', class="material")
+                                h1 #{m.name}
+                                canvas(id='canvas')
+
+
+                        script(type='text/javascript').
+                            function openMaterial(id) {
+                                let materials = !{JSON.stringify(material)}
+                                materials.forEach(m => {
+                                    const to_close = document.getElementById('modal' + m.name)
+                                    to_close.style.display = 'none'
+
+                                })
+                                const b = document.getElementById(id)
+                                const modal = document.getElementById('modal' + id)
+                                modal.style.display = 'block'
+                                const url = './test.pdf'
+                                console.log(url)
+                                // Loaded via <script> tag, create shortcut to access PDF.js exports.
+                                var pdfjsLib = window['pdfjs-dist/build/pdf'];
+
+                                // The workerSrc property shall be specified.
+                                pdfjsLib.GlobalWorkerOptions.workerSrc =
+                                    'pdfjs-dist/build/pdf.worker.js';
+
+                                const loadingTask = pdfjsLib.getDocument(url);
+                                (async () => {
+                                    const pdf = await loadingTask.promise;
+                                    //
+                                    // Fetch the first page
+                                    //
+                                    const page = await pdf.getPage(1);
+                                    const scale = 1.5;
+                                    const viewport = page.getViewport({scale});
+                                    // Support HiDPI-screens.
+                                    const outputScale = window.devicePixelRatio || 1;
+
+                                    //
+                                    // Prepare canvas using PDF page dimensions
+                                    //
+                                    const canvas = document.getElementById("canvas");
+                                    const context = canvas.getContext("2d");
+
+                                    canvas.width = Math.floor(viewport.width * outputScale);
+                                    canvas.height = Math.floor(viewport.height * outputScale);
+                                    canvas.style.width = Math.floor(viewport.width) + "px";
+                                    canvas.style.height = Math.floor(viewport.height) + "px";
+
+                                    const transform = outputScale !== 1
+                                        ? [outputScale, 0, 0, outputScale, 0, 0]
+                                        : null;
+
+                                    //
+                                    // Render PDF page into canvas context
+                                    //
+                                    const renderContext = {
+                                        canvasContext: context,
+                                        transform,
+                                        viewport,
+                                    };
+                                    page.render(renderContext);
+                                })();
+                            }
+
+
+
+
+                        if student == 'admin'
+                            include material
+
+                    else
+                        form(method='post' action='auth')
+                            input(type="text" placeholder="Name..." name="studentName")
+                            input(type="text" placeholder="Student ID..." name="studentID")
+                            button(type='submit')='Sign In'
+
+
+            footer
+                small &copy; Copyright 2021 Daniel Tracy, Czech University of Life Sciences Prague
