@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="pugexp_styling.css">
+        <script src="pugexp_script.js"></script>
+    </head>
+
+    <body>
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, '1')">Javascript Basics</button>
+            <button class="tablinks" onclick="openCity(event, '2')">Javascript Advanced</button>
+            <button class="tablinks" onclick="openCity(event, '3')">DOM</button>
+            <button class="tablinks" onclick="openCity(event, '4')">Asynchronous JavaScript, AJAX and APIs</button>
+            <button class="tablinks" onclick="openCity(event, '5')">JavaScript and Programming Paradigms</button>
+            <button class="tablinks-right" style="float: right;" onclick="openCity(event, '6')">Logout</button>
+
+
+        </div>
+
+        <div id="1" class="tabcontent">
+            <h3>JS Basics</h3>
+        </div>
+
+        <div id="2" class="tabcontent">
+            <h3>Javascript Advanced</h3>
+        </div>
+
+        <div id="3" class="tabcontent">
+            <h3>DOM</h3>
+        </div>
+        <div id="4" class="tabcontent">
+            <h3>Asynchronous JavaScript, AJAX and APIs</h3>
+        </div>
+        <div id="5" class="tabcontent">
+            <h3>JavaScript and Programming Paradigms</h3>
+        </div>
+        <script>
+            function openCity(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+        <br>
+        <div class="flex-parent">
+            <div class="flex-child-1">
+                <h1 style="font-size:35px;">User</h1>
+                <h2>name</h2>
+                <p>sign out button</p>
+                <!-- this is where the student name appears -->
+            </div>
+            <div class="flex-child-2">
+                <h1>Theory </h1>
+                <p>canvas to go here where the pdf and docx wioll be displayed. perhaps using crocodoc*******</p>
+            </div>
+            <div class="flex-child-3">
+                <div class="flex-bastard-grandchild-verdamte-scheisse-1">
+                    <h1>Snippets of Code</h1>
+                    <p>u̡̻̟t͓͖̘ b͉͍̠u̡͚͓t̡̼t͙̘̺o̪̪͚n͚͓̠<̟͎̻/͎͕͜p̡͎̙>͍͙
+                        <̼͇͜!̡͎͚-͉̫-̼̟ t͉͖̟h͙̞͖i̡̫͔s̡̠͇ i͖͎͖s̘͍̟ w͚̼͎h͎̪͔e͕̼̟r̙͉̠e̫͔͜ t̞͚̘h͓͍̞e̡̡͔ s̘̼͜t͔͎̪u͚̝d̢̘͓e̞̫̦n͚̞̝t̼̪͜ n͙͓̦a̘̼͇m̢̟͓e̼̙̞ a͖̪p͎̺p͎̻̼e͇̺̪a̼͍͜r̼̺͜ș͍̼ -͚̘̠-̺͜͜>͕͍͕
+                        <͕͍/̺̙͙d̦̦͎i̡̞̫v̫͓͇>̢̫̘
+                        <̘̪̘d̝̘͜i͖̘͙v̞̝̘ c̪̟͜l̞̺̟a̪͇͜s̼̻̻s͍̝͓=͕̺͚"̢̦f̺̟͉l͔̦͖e̢͙͜x̪̝̫-̢̠͙c̫̝h̻̠̞i̢̠̪l̪̻̞d͕̺̟-̠͇̙2̟̝̘"̠̫̼>͉̪͉
+                        <͇͇͍h̝̦1̪̻͜>͎͚͜T͍͖͜h̢͓̟e͓̘̫o͕̝r̢̡̻y̦̘͕ <͕͍͍/̡͚͙h̢͉͙1͔̠>̪͖̪
+                        <̘͖͇p̠̝͙>̼͎̞c̢͔a̼̻͇n͕̺̻v̫͕a͕͉̫s͙̙̺ t͔̘͜o͓͉̫ g̢̺̪o̡͕̙ h̘̞͚e͍̘̘r͔͙͙e͕̠̻ w͖͔͍h͉͔͇e͓͔̻r͖͜͜e͔̺͜ t͉͖͔h͇͙̞e͙̘͜ p̻̙d̫͎͖f̺̝͜ a̡̠̻n̞̝d̠̪ d̢̦̻o̙͔͎c̻͚̼x̢͇ w̠̙̻i̞͕̝o̞͎l͍̝͜l̦͓̠ b̡̝̞e̙̝̟ d͓͇̘i̼̠̞s͚̪͇p̡͔l͕̝͜a̝͎͙y̢̢͜e͇͕d͇̫͖.̫̫̘ p̞̪̫e̙̠͍r̦̻̪h̫̦͜a̞͇p̼͕̙ș̢͎ u̝̻̞s͍͇͎i͓̞̪n͙͉͓g̢̪͙ c͎̼r̘̼̦o̙͜͜c̫͚̟o̡͇̟d͎͔o̠͙c͎̙*̡͇͇*̡͕̘*̟͎͙*̡̡̻*̻͔*̡̟̘*̠͍͎<͉͚̝/̞͉͙p̢̦>̠̙͜
+                        <̙͓͙/̠͙̺d̡̞͔i͓̫͜v̝͔̝>͚͍̙
+                        <̢̼͇d̙͇̞i͍͇͚v̫͎̦ c̺͍͕l̢̠͓a̞̘s̘̪s̞̟͉=̙͜͜"̟̝͙f̡̫͓l̢̠͔e̢͚͉x͚͜͜-̙͍̪c͓̠̞h͇̟͜i̞̙͎l̢̢̺d͕̞̞-̞͖̘3͙̠͜"̡͕̼>̢̺̙
+                        <̡̡̢d̼͓̦i̝͍͚v̼̙͔ c͎̺̺l̠͉̙a̢̼̙s̼̘̺s̫͖̪=̢̡̫"̙̻͜f̞̟̝l̡̫̦e̙̠͍x͎̞-̢̠b͍͎͜a̦̦͙s̟͙̞t̟̟̘a͍͓̼r͇̙͜d̢̡͎-͖̠̙g̡͉͕r̞͉̠a͕̟͜n͙̪͙d̢̠͉c͓͉h̘̼͓i͖̟̼l̼͚d̦͔̫-̡͓̘v͓̦̘e̫̘͔r͖̙͍d̙͔̞a̘͖̙m̢̪͙t̢͚͙e̞͍̦-͖͓̠s̙͓͎c̦̺h̡͕̙e̪̘̘i͎̞̟s͚̦̫s̺̪͎e͓͉͙-̘̪͉1̢̫͖"̻͓̻>͓̫
+                        <̡͇̪h̪͚̫1̫͉͍>͙̫͜S͉̠̪n͔̺̫i͇͙p̘̞͚p̙̦̘e͓̟t͚͎s͔̞̠ o͖͕̺f̘̺ C̡̙̝o̢̝̼d̫̻͖e̢̺̫<̻͕̼/̞͍̫h͕͚͓1̝̙͖>̞̞̼
+                        <̞̺̝/͕̝̪d̘̟i̝͍̠v͕̦͚>͉͓͎
+                        <̡͕̙d̡̡͙i͚̠͓v͓̦̦ c͙̺l͎̝̟a͉̦͜s͔̠͎s͖͙̙=̢̝͕"͉̻͜f̠̠l̺͉͍e͙̝̙x̢̺̫-͔͙͔b̝̘̙a̟̝s͕̟̻t̡̡͎a̡̢̻r͉̪d̢̺̻-̪͙͔g̝̞̫r̟̪̼a̺͙̪n̠̻͜d͖͕̙c͔̘̟h͚͉i̢̘͕l̡͎̠d̠͍͇-͎̙v̞̠͎e̢̝̺r̺͍͜d͇̦͜a̠͚͎m̡̙̞t̢͔͉e͖͚͔-͍͖͙s͙͙c̼͇̙h͖͍̪e̞̠̞i̘͎̼s̪͙͇s̡͍̠e͇̟-̺͍̞2̼͎͜"͓͚̟>̪̟̦
+                        <͓͜h͍̠3̘̘͚>͖͍͇(̟͇̞2̦̠̟n̘̞͜d̢̢̺)̠͜ m͔͕̼i͙̺̼d̢̠̞d̡̝̦l̺͕̦e̡͎͍ b͚͖̙o͇̘̟x̦͎͖<̡̻̙/̦͜h̦͎̺3͕̼̙>̺̻̝
+                        <̡̢̪b̝͎͙u͓͎̫t͖̫̺t͔̻͎o̠̼͎n͖͕͖>͓͓͜P̡̺͍R͙̠͜E̢͎̠V͓̺͓I͚͚̞O̻̟͕U͔͕͜S̘͚̪ P̞͇̦A̻͓G̢̪̟E͖̫͇<̘̘̝/̘͓͚b̡͚͎u̘̪̻t͇͙͜t̠͎͖o͓͇̫n̝̼͕>͙̫̪
+                        <͉̙͔b̞̺͖r̢̞͔>̻͚͜<̘͉͇b̦̞̫r͔̺>̘̪̦
+                        <̢͉͜/͕͔d͎͓̟i͖̪͜v̢͍͜>͉͓͜
+                        <͚͉͉d̙̪͍i̻̦̞v͕̪͙ c̡͖̟l͙͙̼a̢͉͎s̼̫͜s̢͍̫=̻͇͓"͇͔f͚͎̙l͖̦̟e͍͚̻x͕̙͓-̪͚b͓͓͜a̡͖̪s̢͎̘t͓͍͕a͙̘r̻̪͖d̪̘̺-͕͜g̡̞̼r̟͖̘a̝̼̠n̞̞͔d͖̪͍c̡̦h͇͚͙i͍͚l̙̺̘d̘͎͓-̻͕̞v̡͎͜e̠͇͓r̼̠̦d͕̞͎a̪̘̺m̫͎̙t̢͉̠e̘͓͕-͓͔͙s̪̝c͇͍̫h̡͖e̞̝̫i͇̘͎s̡̟̻s̺͔e̝͇͔-̺̝̺3̢̦͓"̻̻͓>̢͇͔
+                        <̡̟̠h͉̝͖3̻͍͖>̙̠̦B̪̞͖o̠̦t͚͍͜t̼͇̘o͕̟̪m͕̠͖(͚̦͙3̪̝͖r͙̟͖d͉͕)̡͙ b̡̺o̢͚̟t̺͍͖t͍̟̝o̼̻͓m͙͉ b͓̪o̝͉x͙͔̘<̠͍̻/̫̫͉h̡̫͖3̠͖>̡͙
+                        <̡͖̝b̠̘̫u̪͙̝t̺̺t͔̦͓o̻̞n̺͎̙>̺̙̟N̦͓͎E̢̦̘X͙̦̺T̺͕͜ P̡̫̞A͕̼̘G̼̪̻E͓̝͜<̙͓/̙͇̦b̼͉u̘̺͙t͚͓t̘̙̼o͉̻͎n̺͙͎>͎͎͖
+                        <̼̟̪b̝͓͍r͎̻͜>͎͍͔<̘͇̠b͚͉͉r͚͕͙>͎͕͚
+                        <͙̙/͍̦͕d̡̞i̼̻̞v̢̦͜>͖̘͚</p>
+                </div>
+                <div class="flex-bastard-grandchild-verdamte-scheisse-2">
+                    <h3>(2nd) middle box</h3>
+                    <button>PREVIOUS PAGE</button>
+                    <br><br>
+                </div>
+                <div class="flex-bastard-grandchild-verdamte-scheisse-3">
+                    <h3>Bottom(3rd) bottom box</h3>
+                    <button>NEXT PAGE</button>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <footer style="text-align:center; color:black">
+            <small> &copy; Copyright 2021 Daniel Tracy, Czech University of Life Sciences Prague</small>
+        </footer>
+    </body>
+</html>
