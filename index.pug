@@ -1,172 +1,84 @@
+doctype html
 html
-    head
-        title= 'JS Materials'
-        script(src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js')
-        style.
-            *{box-sizing:border-box;}
-            header.header h1{
-                color:darkgreen;
-                text-align: center;
-                font-size:60;
-            }
-            header.header h2{
-                color:grey;
-                text-align:center;
-                font-size:35;
-            }
-            section.side h1{
-                color: cornflowerblue;
-                text-align: center;
-                font-size:28;
-            }
-            section.side h2{
-                            color: cornflowerblue;
-                            text-align: center;
-                            font-family:sans-serif;
-                        }
-            body {
-                background: #afc0ad;
-                margin: 0;
-            }
-
-            aside{
-                flex-wrap:wrap;
-                float:right;
-                color: #ff1493
-            }
-            section.side{
-                -ms-flex: 30%;
-                flex:30%;
-                /*background: linear-gradient(to bottom, #33FFD1 0%, #33FFD1 0%, #ff0066 100%); )
-                /*background-color: linear-gradient(to top, #33ccff 0%, #ff99cc 100%);*/
-                padding: 30px;
-            }
-
-            .columns {
-                display: -ms-flexbox;
-                display: flex;
-                -ms-flex-wrap: wrap;
-                flex-wrap: wrap;
-            }
-
-            /* right column (Main) */
-            .main {
-                -ms-flex: 70%; /* IE10 */
-                flex: 70%;
-                background-color: #33ccff;
-                color: white;
-                padding: 30px;
-            }
-
-
-            /* Responsive-if screen <700px wide,  two columns stack on each other, not next to each other */
-            @media screen and (max-width: 700px) { .columns {flex-direction: column;}
-            }
-            /* Responsive- if screen  <700px wide,  two columns stack on each other, not next to each other */
-            @media screen and (max-width: 400px) { .navbar a .home {float: none;width: 100%;}
-            }
-
-
-
-    body
-        header(class="header")
-            h1 Group Project
-            h2 Javascript + Webdesign
-
-            div(class="columns")
-                section(class="side")
-                    h2
-                        u Materials
-                    if student
-                        h1 Student: #{student}
-                        ul(class='')
-                            each m in material
-                                li
-                                    button(onclick='openMaterial(this.id)', id=m.name) #{m.chapter}.#{m.name}
-
-                        each m in material
-                            div(id='modal' + m.name, style='display:none;', class="material")
-                                h1 #{m.name}
-                                canvas(id='canvas')
-
-
-                        script(type='text/javascript').
-                            function openMaterial(id) {
-                                let materials = !{JSON.stringify(material)}
-                                materials.forEach(m => {
-                                    const to_close = document.getElementById('modal' + m.name)
-                                    to_close.style.display = 'none'
-
-                                })
-                                const b = document.getElementById(id)
-                                const modal = document.getElementById('modal' + id)
-                                modal.style.display = 'block'
-                                const url = './test.pdf'
-                                console.log(url)
-                                // Loaded via <script> tag, create shortcut to access PDF.js exports.
-                                var pdfjsLib = window['pdfjs-dist/build/pdf'];
-
-                                // The workerSrc property shall be specified.
-                                pdfjsLib.GlobalWorkerOptions.workerSrc =
-                                    'pdfjs-dist/build/pdf.worker.js';
-
-                                const loadingTask = pdfjsLib.getDocument(url);
-                                (async () => {
-                                    const pdf = await loadingTask.promise;
-                                    //
-                                    // Fetch the first page
-                                    //
-                                    const page = await pdf.getPage(1);
-                                    const scale = 1.5;
-                                    const viewport = page.getViewport({scale});
-                                    // Support HiDPI-screens.
-                                    const outputScale = window.devicePixelRatio || 1;
-
-                                    //
-                                    // Prepare canvas using PDF page dimensions
-                                    //
-                                    const canvas = document.getElementById("canvas");
-                                    const context = canvas.getContext("2d");
-
-                                    canvas.width = Math.floor(viewport.width * outputScale);
-                                    canvas.height = Math.floor(viewport.height * outputScale);
-                                    canvas.style.width = Math.floor(viewport.width) + "px";
-                                    canvas.style.height = Math.floor(viewport.height) + "px";
-
-                                    const transform = outputScale !== 1
-                                        ? [outputScale, 0, 0, outputScale, 0, 0]
-                                        : null;
-
-                                    //
-                                    // Render PDF page into canvas context
-                                    //
-                                    const renderContext = {
-                                        canvasContext: context,
-                                        transform,
-                                        viewport,
-                                    };
-                                    page.render(renderContext);
-                                })();
-                            }
-
-
-
-
-                        if student == 'admin'
-                            include material
-
-                    else
-                        form(method='post' action='auth')
-                            input(type="text" placeholder="Name..." name="studentName")
-                            input(type="text" placeholder="Student ID..." name="studentID")
-                            button(type='submit')='Sign In'
-
-
-            div(class="main")
-                p(style="text-align:center; color:white")
-                  b Dǝʞɔᴉʅɔ sᴉ ʅɐᴉɹǝʇɐɯ ⅎo ɔᴉdoʇ ǝɥʇ ǝɔuo ƃuᴉʎɐʅdsᴉp ʇuǝʇuoɔ ǝɥʇ ǝʌɐɥ oʇ ʍoɥ ʍouʞ oʇ uᴉɐɯ ǝɥʇ uᴉ ʇuǝʇuoɔ ǝɹoɯ ʇnd oʇ pǝǝu I .ʌᴉp uᴉɐɯ ǝɥʇ ⅎo ƃuᴉuuᴉƃǝq ǝɥʇ ɐ sᴉ ɥɔᴉɥʍ ƃɐʇ d ɐ ǝpᴉsuᴉ sᴉ ʇuǝʇuoɔ sᴉɥʇ ʅʅ∀
-                  b                   b̴͕̞̟͑̒͠ A̴̙̼͉͐͘͝l̸͎͇̼͋̀l̴̫͙͌̿̕ t̴̝͚̘̾̈́͠h̸͕͚̒́͜͝i̵̢̙͓͆͌̚s̸̞͚͙͌͋͒ c̵̝̙̻̔͒͠o̵̦͖͑̓̕͜n̴̞̙͚̐̽͝t̸̠̪̺̽͛̓e̸͇̫͋̈́n̴͕͓̽͒̓͜t̸͎̪͚́̕͝ i̸͔̞͖̽̔͝s̴̢̘̙̒̔͒ i̵̝͙̠̽͑͐n̵̼͓͎͌͌͝s̵̼͚̾̽͌i̴̡͔̻̒̓̚d̸͔̘͙͐̽͊e̵̢̘̪̐̿͆ ä̸͉̻͍́͆͠ p̵̦̞̒̈́̕͜ t̴͚̙̻̾̒̕a̵̡͖͙͆̾̓g̴̠̪̦̾͒̽ w̸͙̦̫͒͘͝h̸͖͕̫͐̕ì̵̦̝͚͊̒c̸͓̼̠̒́̈́ḧ̴̝͙́̈́̿͜ i̵͎̦͇͋͋̓ś̴͇̦̘́͝ á̴͚̘͙̀͋ t̵̫̠̼͛͆̈́h̵̢͎̐̀́é̴͍̝͛͊͜ b̵͍̟̪̿͊̚e̵̻̫͌͆̔g̵͕̼͊͆͜i̵̞͕̫͛̒n̴̦͔͓͒͠͝ǹ̴͙͚͔͐̐í̸̞̝̝̓͝n̸̫̫̒͆͘g̵̼͎̪̐̈́͘ o̴̡͎̔͌f̸͕͇̞͐̒ t̵͎͙͉͛͠h̸̢͖̟̓̐͌e̵͔͙̼͌̈́̔ m̸̺̟̈́́̈́a̵̞͉̪͊͐̕i̴͓̪̿͑͘n̸̙͇̔̐̓͜ d̸̫̐̓͑͜ḯ̴̟̞̺́͝v̴͚͍͔͝͠.̴͖̟̠̽̔̓ Ì̴̟̠̐͐ n̴̠̝͓̓̀́e̴̫̘͆͊̕e̴̙̦͖͆̿d̵̞̘̝͆̾ t̵͉̻͉̔͌́o̸̟̟̙̾͘͠ p̴͙͔͉͘͠u̸̻̦͉͛̐ț̸͖͍́͌͝ m̸͖̪͛͊͘͜o̸̢͎̼͑͊̽r̸̙͓͐̔̚e̵̦̻̔̈́́͜ c̸͙͍̻̈́̓͘o̴̡̪̓͑̚n̴̼̠͓͑̈́͋t̵̢͍̫̀̽̚e̸̡̦͖̾̿͊n̴̢̝͎̔̽͋ẗ̵̘̠́͊͌ i̴͖͚̒̔n̵͉̦̫̒̐͐ t̸͕̟͑͋͠h̵͇̻̪͌̽̚e̵̢̫͎͑̐̕ m̸͕͚̦͐͌͐a̵͎͍͋̒̔͜ḯ̴̢͎͓̚͝n̵̢̫̽͒͘͜ t̵̢̫̝̀̓̽o̵͙͎̺͑̚͝ k̸͓͎͎̓͒̈́n̸̫͕̪̽̽͝o̸͎͎̺̓͑̿w̴̘̝͇͛͆ h̴̡̘͐͊͝ó̸̟͎̟̀̀w̴͎̦̙͌͘ t̸̠̘̟͐̚͠ö̵͔͙͙́͑͌ h̸̡̻̼̔͠͝a̴͖͍̔͌͆v̴͕̫͙̀͛͑ë̴̻̦́̽͒ t̴̼̻͋̓͒͜h̴̢̘͍͒̚͠e̵͍͉͇͌̓ c̵͍̦͍̓̈́̕o̴̫̟̪̽͘̚n̵̘̺͉̾̾̒t̴̘͕̪͊̽͝e̴͍̦̺͆͑n̴̪͇̈́́͘t̵̪̘̫͋͐͑ d̴̺̦̓̾̒͜i̴͎͚̺̔̿͝s̵͎̺̦̓̓̓p̸͎̦͎͐̒͒l̴̙̺͎͐̒͝a̵͖͇̟̐̔͠ỳ̸̼͙̞̐i̵͓̺͍̔̕n̵͓̠̪͑̓͝g̸̡͙̦̓͊͘ o̸̢͖̔͊͌n̴̘̫̘̈́͋͊c̵̺͕͍̽̈́̕ë̵͓̟́̒͘ ẗ̸̡͇́̓́h̵̙͓͓͛̽̚e̴̞̟͕̔͆͝ t̵͓͙̼͒̓o̸͕͇̼̐̓̚p̸͇͍͙̓̐̽i̵̟̫̞̒͘c̵͙̠͕͐̚͘ o̴̢̘̟͛̚̚f̵̠͎͐͊̕ m̵̼̫͆́͝a̵̟͎̝̽͑͘ẗ̴̢̼̠́͊͘e̸̻̼͊́͘͜r̵̫̞̞͛̓i̴̫͇͕̓̓͊a̵͉̺͐̈́l̸̼͇͔̐͛̚ i̸͕̠͋̕͝s̵̞͉͎̔͒͘ c̵͓͔͓͛͘͘l̴̡̦͙͆̿͒i̵͚͎͆̾̕c̵̡̪͖͋̔k̴͎̫̺͊͊͘e̸̻͖̾̒͋͜d̴͕͎̔̾̕͜
-
-                  b                   ᵇ̴͕̞̟͑̒͠ ᴬ̴̙̼͉͐͘͝ˡ̸͎͇̼͋̀ˡ̴̫͙͌̿̕ ᵗ̴̝͚̘̾̈́͠ʰ̸͕͚̒́͜͝ⁱ̵̢̙͓͆͌̚ˢ̸̞͚͙͌͋͒ ᶜ̵̝̙̻̔͒͠ᵒ̵̦͖͑̓̕͜ⁿ̴̞̙͚̐̽͝ᵗ̸̠̪̺̽͛̓ᵉ̸͇̫͋̈́ⁿ̴͕͓̽͒̓͜ᵗ̸͎̪͚́̕͝ ⁱ̸͔̞͖̽̔͝ˢ̴̢̘̙̒̔͒ ⁱ̵̝͙̠̽͑͐ⁿ̵̼͓͎͌͌͝ˢ̵̼͚̾̽͌ⁱ̴̡͔̻̒̓̚ᵈ̸͔̘͙͐̽͊ᵉ̵̢̘̪̐̿͆ ᵃ̸͉̻͍̈́͆͠ ᵖ̵̦̞̒̈́̕͜ ᵗ̴͚̙̻̾̒̕ᵃ̵̡͖͙͆̾̓ᵍ̴̠̪̦̾͒̽ ʷ̸͙̦̫͒͘͝ʰ̸͖͕̫͐̕ⁱ̵̦̝͚̀͊̒ᶜ̸͓̼̠̒́̈́ʰ̴̝͙̈́̈́̿͜ ⁱ̵͎̦͇͋͋̓ˢ̴͇̦̘́́͝ ᵃ̴͚̘͙́̀͋ ᵗ̵̫̠̼͛͆̈́ʰ̵̢͎̐̀́ᵉ̴͍̝́͛͊͜ ᵇ̵͍̟̪̿͊̚ᵉ̵̻̫͌͆̔ᵍ̵͕̼͊͆͜ⁱ̵̞͕̫͛̒ⁿ̴̦͔͓͒͠͝ⁿ̴͙͚͔̀͐̐ⁱ̸̞̝̝́̓͝ⁿ̸̫̫̒͆͘ᵍ̵̼͎̪̐̈́͘ ᵒ̴̡͎̔͌ᶠ̸͕͇̞͐̒ ᵗ̵͎͙͉͛͠ʰ̸̢͖̟̓̐͌ᵉ̵͔͙̼͌̈́̔ ᵐ̸̺̟̈́́̈́ᵃ̵̞͉̪͊͐̕ⁱ̴͓̪̿͑͘ⁿ̸̙͇̔̐̓͜ ᵈ̸̫̐̓͑͜ⁱ̴̟̞̺̈́́͝ᵛ̴͚͍͔͝͠‧̴͖̟̠̽̔̓ ᴵ̴̟̠̀̐͐ ⁿ̴̠̝͓̓̀́ᵉ̴̫̘͆͊̕ᵉ̴̙̦͖͆̿ᵈ̵̞̘̝͆̾ ᵗ̵͉̻͉̔͌́ᵒ̸̟̟̙̾͘͠ ᵖ̴͙͔͉͘͠ᵘ̸̻̦͉͛̐ᵗ̸̦͖͍́͌͝ ᵐ̸͖̪͛͊͘͜ᵒ̸̢͎̼͑͊̽ʳ̸̙͓͐̔̚ᵉ̵̦̻̔̈́́͜ ᶜ̸͙͍̻̈́̓͘ᵒ̴̡̪̓͑̚ⁿ̴̼̠͓͑̈́͋ᵗ̵̢͍̫̀̽̚ᵉ̸̡̦͖̾̿͊ⁿ̴̢̝͎̔̽͋ᵗ̵̘̠̈́͊͌ ⁱ̴͖͚̒̔ⁿ̵͉̦̫̒̐͐ ᵗ̸͕̟͑͋͠ʰ̵͇̻̪͌̽̚ᵉ̵̢̫͎͑̐̕ ᵐ̸͕͚̦͐͌͐ᵃ̵͎͍͋̒̔͜ⁱ̴̢͎͓̈́̚͝ⁿ̵̢̫̽͒͘͜ ᵗ̵̢̫̝̀̓̽ᵒ̵͙͎̺͑̚͝ ᵏ̸͓͎͎̓͒̈́ⁿ̸̫͕̪̽̽͝ᵒ̸͎͎̺̓͑̿ʷ̴̘̝͇͛͆ ʰ̴̡̘͐͊͝ᵒ̸̟͎̟́̀̀ʷ̴͎̦̙͌͘ ᵗ̸̠̘̟͐̚͠ᵒ̵͔͙͙̈́͑͌ ʰ̸̡̻̼̔͠͝ᵃ̴͖͍̔͌͆ᵛ̴͕̫͙̀͛͑ᵉ̴̻̦̈́̽͒ ᵗ̴̼̻͋̓͒͜ʰ̴̢̘͍͒̚͠ᵉ̵͍͉͇͌̓ ᶜ̵͍̦͍̓̈́̕ᵒ̴̫̟̪̽͘̚ⁿ̵̘̺͉̾̾̒ᵗ̴̘͕̪͊̽͝ᵉ̴͍̦̺͆͑ⁿ̴̪͇̈́́͘ᵗ̵̪̘̫͋͐͑ ᵈ̴̺̦̓̾̒͜ⁱ̴͎͚̺̔̿͝ˢ̵͎̺̦̓̓̓ᵖ̸͎̦͎͐̒͒ˡ̴̙̺͎͐̒͝ᵃ̵͖͇̟̐̔͠ʸ̸̼͙̞̀̐ⁱ̵͓̺͍̔̕ⁿ̵͓̠̪͑̓͝ᵍ̸̡͙̦̓͊͘ ᵒ̸̢͖̔͊͌ⁿ̴̘̫̘̈́͋͊ᶜ̵̺͕͍̽̈́̕ᵉ̵͓̟̈́̒͘ ᵗ̸̡͇̈́̓́ʰ̵̙͓͓͛̽̚ᵉ̴̞̟͕̔͆͝ ᵗ̵͓͙̼͒̓ᵒ̸͕͇̼̐̓̚ᵖ̸͇͍͙̓̐̽ⁱ̵̟̫̞̒͘ᶜ̵͙̠͕͐̚͘ ᵒ̴̢̘̟͛̚̚ᶠ̵̠͎͐͊̕ ᵐ̵̼̫͆́͝ᵃ̵̟͎̝̽͑͘ᵗ̴̢̼̠̈́͊͘ᵉ̸̻̼͊́͘͜ʳ̵̫̞̞͛̓ⁱ̴̫͇͕̓̓͊ᵃ̵͉̺͐̈́ˡ̸̼͇͔̐͛̚ ⁱ̸͕̠͋̕͝ˢ̵̞͉͎̔͒͘ ᶜ̵͓͔͓͛͘͘ˡ̴̡̦͙͆̿͒ⁱ̵͚͎͆̾̕ᶜ̵̡̪͖͋̔ᵏ̴͎̫̺͊͊͘ᵉ̸̻͖̾̒͋͜ᵈ̴͕͎̔̾̕͜ᵛ
-            footer(style="text-align:center; color:white")
-                small &copy; Copyright 2021 Daniel Tracy, Czech University of Life Sciences Prague
+  head
+    link(rel='stylesheet' href='pugexp_styling.css')
+    script(src='pugexp_script.js')
+  body
+    .tab
+      button.tablinks(onclick='openCity(event, '1')') Javascript Basics
+      button.tablinks(onclick='openCity(event, '2')') Javascript Advanced
+      button.tablinks(onclick='openCity(event, '3')') DOM
+      button.tablinks(onclick='openCity(event, '4')') Asynchronous JavaScript, AJAX and APIs
+      button.tablinks(onclick='openCity(event, '5')') JavaScript and Programming Paradigms
+      button.tablinks-right(style='float: right;' onclick='openCity(event, '6')') Logout
+    #1.tabcontent
+      h3 JS Basics
+    #2.tabcontent
+      h3 Javascript Advanced
+    #3.tabcontent
+      h3 DOM
+    #4.tabcontent
+      h3 Asynchronous JavaScript, AJAX and APIs
+    #5.tabcontent
+      h3 JavaScript and Programming Paradigms
+    script.
+      function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+      }
+    br
+    .flex-parent
+      .flex-child-1
+        h1(style='font-size:35px;') User
+        h2 name
+        p sign out button
+        // this is where the student name appears
+      .flex-child-2
+        h1 Theory 
+        p canvas to go here where the pdf and docx wioll be displayed. perhaps using crocodoc*******
+      .flex-child-3
+        .flex-bastard-grandchild-verdamte-scheisse-1
+          h1 Snippets of Code
+          p
+            | u̡̻̟t͓͖̘ b͉͍̠u̡͚͓t̡̼t͙̘̺o̪̪͚n͚͓̠<̟͎̻/͎͕͜p̡͎̙>͍͙
+            | <̼͇͜!̡͎͚-͉̫-̼̟ t͉͖̟h͙̞͖i̡̫͔s̡̠͇ i͖͎͖s̘͍̟ w͚̼͎h͎̪͔e͕̼̟r̙͉̠e̫͔͜ t̞͚̘h͓͍̞e̡̡͔ s̘̼͜t͔͎̪u͚̝d̢̘͓e̞̫̦n͚̞̝t̼̪͜ n͙͓̦a̘̼͇m̢̟͓e̼̙̞ a͖̪p͎̺p͎̻̼e͇̺̪a̼͍͜r̼̺͜ș͍̼ -͚̘̠-̺͜͜>͕͍͕
+            | <͕͍/̺̙͙d̦̦͎i̡̞̫v̫͓͇>̢̫̘
+            | <̘̪̘d̝̘͜i͖̘͙v̞̝̘ c̪̟͜l̞̺̟a̪͇͜s̼̻̻s͍̝͓=͕̺͚"̢̦f̺̟͉l͔̦͖e̢͙͜x̪̝̫-̢̠͙c̫̝h̻̠̞i̢̠̪l̪̻̞d͕̺̟-̠͇̙2̟̝̘"̠̫̼>͉̪͉
+            | <͇͇͍h̝̦1̪̻͜>͎͚͜T͍͖͜h̢͓̟e͓̘̫o͕̝r̢̡̻y̦̘͕ <͕͍͍/̡͚͙h̢͉͙1͔̠>̪͖̪
+            | <̘͖͇p̠̝͙>̼͎̞c̢͔a̼̻͇n͕̺̻v̫͕a͕͉̫s͙̙̺ t͔̘͜o͓͉̫ g̢̺̪o̡͕̙ h̘̞͚e͍̘̘r͔͙͙e͕̠̻ w͖͔͍h͉͔͇e͓͔̻r͖͜͜e͔̺͜ t͉͖͔h͇͙̞e͙̘͜ p̻̙d̫͎͖f̺̝͜ a̡̠̻n̞̝d̠̪ d̢̦̻o̙͔͎c̻͚̼x̢͇ w̠̙̻i̞͕̝o̞͎l͍̝͜l̦͓̠ b̡̝̞e̙̝̟ d͓͇̘i̼̠̞s͚̪͇p̡͔l͕̝͜a̝͎͙y̢̢͜e͇͕d͇̫͖.̫̫̘ p̞̪̫e̙̠͍r̦̻̪h̫̦͜a̞͇p̼͕̙ș̢͎ u̝̻̞s͍͇͎i͓̞̪n͙͉͓g̢̪͙ c͎̼r̘̼̦o̙͜͜c̫͚̟o̡͇̟d͎͔o̠͙c͎̙*̡͇͇*̡͕̘*̟͎͙*̡̡̻*̻͔*̡̟̘*̠͍͎<͉͚̝/̞͉͙p̢̦>̠̙͜
+            | <̙͓͙/̠͙̺d̡̞͔i͓̫͜v̝͔̝>͚͍̙
+            | <̢̼͇d̙͇̞i͍͇͚v̫͎̦ c̺͍͕l̢̠͓a̞̘s̘̪s̞̟͉=̙͜͜"̟̝͙f̡̫͓l̢̠͔e̢͚͉x͚͜͜-̙͍̪c͓̠̞h͇̟͜i̞̙͎l̢̢̺d͕̞̞-̞͖̘3͙̠͜"̡͕̼>̢̺̙
+            | <̡̡̢d̼͓̦i̝͍͚v̼̙͔ c͎̺̺l̠͉̙a̢̼̙s̼̘̺s̫͖̪=̢̡̫"̙̻͜f̞̟̝l̡̫̦e̙̠͍x͎̞-̢̠b͍͎͜a̦̦͙s̟͙̞t̟̟̘a͍͓̼r͇̙͜d̢̡͎-͖̠̙g̡͉͕r̞͉̠a͕̟͜n͙̪͙d̢̠͉c͓͉h̘̼͓i͖̟̼l̼͚d̦͔̫-̡͓̘v͓̦̘e̫̘͔r͖̙͍d̙͔̞a̘͖̙m̢̪͙t̢͚͙e̞͍̦-͖͓̠s̙͓͎c̦̺h̡͕̙e̪̘̘i͎̞̟s͚̦̫s̺̪͎e͓͉͙-̘̪͉1̢̫͖"̻͓̻>͓̫
+            | <̡͇̪h̪͚̫1̫͉͍>͙̫͜S͉̠̪n͔̺̫i͇͙p̘̞͚p̙̦̘e͓̟t͚͎s͔̞̠ o͖͕̺f̘̺ C̡̙̝o̢̝̼d̫̻͖e̢̺̫<̻͕̼/̞͍̫h͕͚͓1̝̙͖>̞̞̼
+            | <̞̺̝/͕̝̪d̘̟i̝͍̠v͕̦͚>͉͓͎
+            | <̡͕̙d̡̡͙i͚̠͓v͓̦̦ c͙̺l͎̝̟a͉̦͜s͔̠͎s͖͙̙=̢̝͕"͉̻͜f̠̠l̺͉͍e͙̝̙x̢̺̫-͔͙͔b̝̘̙a̟̝s͕̟̻t̡̡͎a̡̢̻r͉̪d̢̺̻-̪͙͔g̝̞̫r̟̪̼a̺͙̪n̠̻͜d͖͕̙c͔̘̟h͚͉i̢̘͕l̡͎̠d̠͍͇-͎̙v̞̠͎e̢̝̺r̺͍͜d͇̦͜a̠͚͎m̡̙̞t̢͔͉e͖͚͔-͍͖͙s͙͙c̼͇̙h͖͍̪e̞̠̞i̘͎̼s̪͙͇s̡͍̠e͇̟-̺͍̞2̼͎͜"͓͚̟>̪̟̦
+            | <͓͜h͍̠3̘̘͚>͖͍͇(̟͇̞2̦̠̟n̘̞͜d̢̢̺)̠͜ m͔͕̼i͙̺̼d̢̠̞d̡̝̦l̺͕̦e̡͎͍ b͚͖̙o͇̘̟x̦͎͖<̡̻̙/̦͜h̦͎̺3͕̼̙>̺̻̝
+            | <̡̢̪b̝͎͙u͓͎̫t͖̫̺t͔̻͎o̠̼͎n͖͕͖>͓͓͜P̡̺͍R͙̠͜E̢͎̠V͓̺͓I͚͚̞O̻̟͕U͔͕͜S̘͚̪ P̞͇̦A̻͓G̢̪̟E͖̫͇<̘̘̝/̘͓͚b̡͚͎u̘̪̻t͇͙͜t̠͎͖o͓͇̫n̝̼͕>͙̫̪
+            | <͉̙͔b̞̺͖r̢̞͔>̻͚͜<̘͉͇b̦̞̫r͔̺>̘̪̦
+            | <̢͉͜/͕͔d͎͓̟i͖̪͜v̢͍͜>͉͓͜
+            | <͚͉͉d̙̪͍i̻̦̞v͕̪͙ c̡͖̟l͙͙̼a̢͉͎s̼̫͜s̢͍̫=̻͇͓"͇͔f͚͎̙l͖̦̟e͍͚̻x͕̙͓-̪͚b͓͓͜a̡͖̪s̢͎̘t͓͍͕a͙̘r̻̪͖d̪̘̺-͕͜g̡̞̼r̟͖̘a̝̼̠n̞̞͔d͖̪͍c̡̦h͇͚͙i͍͚l̙̺̘d̘͎͓-̻͕̞v̡͎͜e̠͇͓r̼̠̦d͕̞͎a̪̘̺m̫͎̙t̢͉̠e̘͓͕-͓͔͙s̪̝c͇͍̫h̡͖e̞̝̫i͇̘͎s̡̟̻s̺͔e̝͇͔-̺̝̺3̢̦͓"̻̻͓>̢͇͔
+            | <̡̟̠h͉̝͖3̻͍͖>̙̠̦B̪̞͖o̠̦t͚͍͜t̼͇̘o͕̟̪m͕̠͖(͚̦͙3̪̝͖r͙̟͖d͉͕)̡͙ b̡̺o̢͚̟t̺͍͖t͍̟̝o̼̻͓m͙͉ b͓̪o̝͉x͙͔̘<̠͍̻/̫̫͉h̡̫͖3̠͖>̡͙
+            | <̡͖̝b̠̘̫u̪͙̝t̺̺t͔̦͓o̻̞n̺͎̙>̺̙̟N̦͓͎E̢̦̘X͙̦̺T̺͕͜ P̡̫̞A͕̼̘G̼̪̻E͓̝͜<̙͓/̙͇̦b̼͉u̘̺͙t͚͓t̘̙̼o͉̻͎n̺͙͎>͎͎͖
+            | <̼̟̪b̝͓͍r͎̻͜>͎͍͔<̘͇̠b͚͉͉r͚͕͙>͎͕͚
+            | <͙̙/͍̦͕d̡̞i̼̻̞v̢̦͜>͖̘͚
+        .flex-bastard-grandchild-verdamte-scheisse-2
+          h3 (2nd) middle box
+          button PREVIOUS PAGE
+          br
+          br
+        .flex-bastard-grandchild-verdamte-scheisse-3
+          h3 Bottom(3rd) bottom box
+          button NEXT PAGE
+          br
+          br
+    footer(style='text-align:center; color:black')
+      small  &copy; Copyright 2021 Daniel Tracy, Czech University of Life Sciences Prague
